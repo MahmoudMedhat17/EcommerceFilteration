@@ -14,7 +14,7 @@ const Sidebar = () => {
   const[products,setProducts] = useState<string[]>([]);
   const keyWords = ["apple", "watch", "fashion", "trend", "shoes", "shirt"];
   const url = 'https://dummyjson.com/products';
-  const {searchQuery,selectedCategory,maxPrice,minPrice,setSelectedCategory,setKeywords,setMaxPrice,setMinPrice,setSearchQuery} = useFilterContext();
+  const {searchQuery,selectedCategory,maxPrice,minPrice,setSelectedCategory,setKeyword,setMaxPrice,setMinPrice,setSearchQuery} = useFilterContext();
 
   useEffect(()=>{
     const fetchCategories = async () =>{
@@ -22,7 +22,7 @@ const Sidebar = () => {
         const categoriesData = await axios.get(url);
         const responseData: categoryType[] = categoriesData.data;
         const uniqueCategoryData = [...new Set(responseData?.products?.map((item)=> item.category))] as string[];
-        console.log(uniqueCategoryData);
+        // console.log(uniqueCategoryData);
         setProducts(uniqueCategoryData);
       } catch (error) {
         console.log(error,"Couldn't get the categories from the API data.");
@@ -47,7 +47,7 @@ const Sidebar = () => {
   };
   
   const handleKeywords = (keyword:string) =>{
-    setKeywords(keyword);
+    setKeyword(keyword);
   };
 
   const handleResetButton = () =>{
@@ -55,7 +55,7 @@ const Sidebar = () => {
     setMinPrice(undefined);
     setMaxPrice(undefined);
     setSelectedCategory("");
-    setKeywords("");
+    setKeyword("");
   };
 
   return (

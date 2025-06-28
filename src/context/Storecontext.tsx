@@ -10,8 +10,8 @@ interface ContextProps{
     setMinPrice:(minPrice:number | undefined)=>void;
     maxPrice:number | undefined;
     setMaxPrice:(maxPrice:number | undefined)=>void;
-    keywords:string;
-    setKeywords:(keywords:string)=>void;
+    keyword:string;
+    setKeyword:(keywords:string)=>void;
 };
 
 const FilterContextType = createContext<ContextProps | undefined>(undefined);
@@ -23,10 +23,10 @@ const StoreContext = ({children}:{children:React.ReactNode})=>{
     const[minPrice,setMinPrice] = useState<number | undefined>(undefined);
     const[maxPrice,setMaxPrice] = useState<number | undefined>(undefined);
     const[selectedCategory,setSelectedCategory] = useState<string>("");
-    const[keywords,setKeywords] = useState<string>("");
+    const[keyword,setKeyword] = useState<string>("");
 
 
-    const contextValues = {searchQuery, setSearchQuery, minPrice, setMinPrice, maxPrice, setMaxPrice, selectedCategory, setSelectedCategory, keywords, setKeywords};
+    const contextValues = {searchQuery, setSearchQuery, minPrice, setMinPrice, maxPrice, setMaxPrice, selectedCategory, setSelectedCategory, keyword, setKeyword};
 
     return(
         <FilterContextType.Provider value={contextValues}>
