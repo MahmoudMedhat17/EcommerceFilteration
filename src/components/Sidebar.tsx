@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {useFilterContext} from "../context/Storecontext";
-
+import { Link } from "react-router-dom";
 
 interface categoryType{
   category:string;
@@ -60,7 +60,9 @@ const Sidebar = () => {
 
   return (
     <div className="px-4 py-6 w-64 h-auto">
-      <h2 className="font-bold text-xl">Store</h2>
+      <Link to="/">
+        <h2 className="font-bold text-xl">Store</h2>
+      </Link>
       
       <section className="mt-8">
         <input type="text" placeholder="Search Product" className="w-full border-2 border-gray-100 rounded-md p-2" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}/>

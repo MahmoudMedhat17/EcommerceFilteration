@@ -3,6 +3,7 @@ import {  useEffect, useState } from "react";
 import axios from "axios";
 import { useFilterContext } from "../context/Storecontext";
 import Productcard from "./Productcard";
+import { Link } from "react-router-dom";
 
 
 
@@ -51,7 +52,9 @@ const Content = () => {
         <section className="mt-2 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {
                 products.map((product)=>(
-                    <Productcard key={product.id} title={product.title} image={product.thumbnail} price={product.price}/>
+                    <Link to={`/product/${product.id}`}>
+                        <Productcard key={product.id} title={product.title} image={product.thumbnail} price={product.price}/>
+                    </Link>
                 ))
             }
         </section>
