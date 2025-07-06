@@ -13,12 +13,12 @@ const Content = () => {
     const[filter,setFilter] = useState("all");
     const[currentPage,setCurrentPage] = useState(1);
     const productsPerPage = 9;
-    const {keyword,maxPrice,minPrice,searchQuery,selectedCategory,setKeyword,setMaxPrice,setMinPrice,setSearchQuery,setSelectedCategory} = useFilterContext();
-    let url = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}`;
-
+    const {keyword,maxPrice,minPrice,searchQuery,selectedCategory} = useFilterContext();
+    
     useEffect(()=>{
+        let url = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}`;
         if(keyword){
-            url = `https://dummyjson.com/products?search?q=${keyword}`
+            url = `https://dummyjson.com/products/search?q=${keyword}`;
         };
 
         axios.get(url).then((item)=>{
@@ -31,6 +31,44 @@ const Content = () => {
 
     },[currentPage, keyword]);
 
+
+    let filteredProducts = [...products];
+
+
+    const getFilteredProducts = () =>{
+        if(searchQuery){
+            filteredProducts = filteredProducts.filter((product)=> product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        };
+
+        if(minPrice !== undefined){
+            filteredProducts = filteredProducts.filter((product)=> product.price >= minPrice);
+        };
+
+        if(maxPrice !== undefined){
+            filteredProducts = filteredProducts.filter((product)=> product.price <= maxPrice);
+        };
+
+        if(selectedCategory){
+            filteredProducts = filteredProducts.filter((product)=> product.category === selectedCategory);
+        };
+
+        if(filter === "cheap"){
+            return filteredProducts.sort((a,b)=> a.price - b.price);
+        };
+
+        if(filter === "expensive"){
+            return filteredProducts.sort((a,b)=> b.price - a.price);
+        };
+
+        if(filter === "popular"){
+            return filteredProducts.sort((a,b)=> b.rating - a.rating);
+        };
+
+        return filteredProducts;
+    };
+
+
+    const displayProducts = getFilteredProducts();
 
 
   return (
@@ -51,7 +89,8 @@ const Content = () => {
         {/* Here get data from the API */}
         <section className="mt-2 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {
-                products.map((product)=>(
+                displayProducts.map((product)=>(
+                    // Create a condition here if the category is empty then show a message
                     <Link to={`/product/${product.id}`}>
                         <Productcard key={product.id} title={product.title} image={product.thumbnail} price={product.price}/>
                     </Link>

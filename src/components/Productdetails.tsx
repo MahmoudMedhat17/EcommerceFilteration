@@ -38,7 +38,7 @@ const Productdetails = () => {
         <div className="space-y-4">
           <img src={productDetail.thumbnail} alt={productDetail.title} />
           <h3 className="font-bold text-xl">{productDetail.title}</h3>
-          <p className="font-medium">{productDetail.description}</p>
+          <p>{productDetail.description}</p>
           <div>
             <p><span className="font-semibold">Price:</span> ${productDetail.price}</p>
             <p><span className="font-semibold">Rating:</span> {productDetail.rating}</p>
