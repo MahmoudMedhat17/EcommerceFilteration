@@ -4,6 +4,7 @@ import axios from "axios";
 import { useFilterContext } from "../context/Storecontext";
 import Productcard from "./Productcard";
 import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
 
 
 
@@ -12,8 +13,11 @@ const Content = () => {
     const[dropDown,setDropDown] = useState(false);
     const[filter,setFilter] = useState("all");
     const[currentPage,setCurrentPage] = useState(1);
-    const productsPerPage = 9;
     const {keyword,maxPrice,minPrice,searchQuery,selectedCategory} = useFilterContext();
+    const productsPerPage = 12;
+    const totalProducts = 100;
+    // This variable is set to display the total of items according to totalProducts / productsPerPage =>  100 / 12 = 8.3 => Math.ceil(8.3) = 9 pages
+    const totalItems = Math.ceil(totalProducts / productsPerPage);
     
     useEffect(()=>{
         let url = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}`;
@@ -96,6 +100,11 @@ const Content = () => {
                     </Link>
                 ))
             }
+        </section>
+
+        {/* Pagination */}
+        <section className="mt-10 flex justify-center items-center w-full">
+            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalItems={totalItems}/>
         </section>
     </div>
   )
